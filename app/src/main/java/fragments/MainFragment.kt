@@ -44,6 +44,7 @@ class MainFragment : Fragment() {
             pLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION) //то запускаем диалог, чтобы спросить пользователя
             //а если разрешение есть, то ничего не делаем
         }
+
     }
 
     companion object {
