@@ -4,7 +4,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import fragments.MainFragment
 
-class MainActivity : AppCompatActivity() { //мейн активити будет использоваться только для запуска фрагментов
+class MainActivity :
+    AppCompatActivity() { //мейн активити будет использоваться только для запуска фрагментов
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -12,5 +13,10 @@ class MainActivity : AppCompatActivity() { //мейн активити буде�
             .beginTransaction()
             .replace(R.id.placeHolder, MainFragment.newInstance())
             .commit()
+        val test = Test()
+
+        test.test1()
+        test.test2()
+
     }
 }
