@@ -13,10 +13,7 @@ class MainActivity :
             .beginTransaction()
             .replace(R.id.placeHolder, MainFragment.newInstance())
             .commit()
-        val test = Test()
 
-        test.test1()
-        test.test2()
 
     }
 }
