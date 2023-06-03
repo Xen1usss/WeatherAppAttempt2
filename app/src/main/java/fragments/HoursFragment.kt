@@ -27,5 +27,4 @@ class HoursFragment : Fragment() {
         fun newInstance() = HoursFragment()
                 }
             }
-    }
-}
+

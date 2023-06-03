@@ -23,5 +23,4 @@ class DaysFragment : Fragment() {
         fun newInstance() = DaysFragment()
                 }
             }
-    }
-}
+
