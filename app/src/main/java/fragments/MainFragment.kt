@@ -10,10 +10,21 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.FragmentActivity
+import com.google.android.material.tabs.TabLayoutMediator
 import ru.startandroid.develop.weatherappattempt2.R
+import ru.startandroid.develop.weatherappattempt2.adapters.VpAdapter
 import ru.startandroid.develop.weatherappattempt2.databinding.FragmentMainBinding
 
 class MainFragment : Fragment() {
+    private val fList = listOf(
+        HoursFragment.newInstance(),
+        DaysFragment.newInstance()
+    )
+    private val tList = listOf(
+        "Hours",
+        "Days"
+    )
     private lateinit var pLauncher: ActivityResultLauncher<String> //в треуг. скобках тип данных, который передаем
     private lateinit var binding: FragmentMainBinding //переменная, в которой мы будем хранить эту инстанцию
 
@@ -29,7 +40,16 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         checkPermission()
+        init()
     }
+
+    private fun init() = with(binding){ //в этой функции все инициализируем
+        val adapter = VpAdapter(activity as FragmentActivity, fList)
+        vp.adapter = adapter
+        TabLayoutMediator(tabLayout, vp) {
+            tab, pos -> tab.text = tList[pos] // на tab нажимаем, pos - позиция
+        }
+    } .attach()
 
     //инициализируем/регистрируем pLauncher
     private fun permissionListener() { //проверка на разрешение в реальном времени
