@@ -4,15 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- TODO: Update blank fragment layout -->
-
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="fitXY"
-        android:src="@drawable/cloudsmain2"
-        />
+        android:src="@drawable/cloudsmain2" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"

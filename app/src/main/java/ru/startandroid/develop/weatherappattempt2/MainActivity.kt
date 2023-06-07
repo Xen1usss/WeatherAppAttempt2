@@ -2,6 +2,7 @@ package ru.startandroid.develop.weatherappattempt2
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import fragments.MainFragment
 
 class MainActivity :
@@ -13,7 +14,5 @@ class MainActivity :
             .beginTransaction()
             .replace(R.id.placeHolder, MainFragment.newInstance())
             .commit()
-
-
     }
 }
