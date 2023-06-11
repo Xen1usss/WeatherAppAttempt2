@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">WeatherAppAttempt2</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="hours">Hours</string>
     <string name="days">Days</string>
     <string name="schedule">Saturday 10/06/2023</string>
@@ -10,5 +9,6 @@
     <string name="currentTempF">25°C</string>
     <string name="minMaxTemp">35°C/25°C</string>
     <string name="condition">Sunny</string>
+    <string name="empty">Empty</string>
 
 </resources>
