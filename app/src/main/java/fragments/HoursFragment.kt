@@ -12,7 +12,7 @@ import ru.startandroid.develop.weatherappattempt2.databinding.FragmentMainBindin
 
 
 class HoursFragment : Fragment() {
-    private lateinit var binding: FragmentMainBinding
+    private lateinit var binding: FragmentHoursBinding
     private lateinit var adapter: WeatherAdapter
 
     override fun onCreateView(
