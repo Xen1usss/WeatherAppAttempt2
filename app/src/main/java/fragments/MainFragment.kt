@@ -67,6 +67,19 @@ class MainFragment : Fragment() {
 
     }
 
+
+    private fun requestWeatherData(city: String) {
+        val url = "https://api.weatherapi.com/v1/forecast.json?key=" +
+                "9562bba8a2bd4c1eae0142135232604" +
+                "&q=" +
+                "London" +
+                "&days=" +
+                "3" +
+                "&aqi=no&alerts=no"
+
+
+    }
+
     companion object {
         @JvmStatic
         fun newInstance() = MainFragment()
