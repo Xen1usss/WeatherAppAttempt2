@@ -103,6 +103,10 @@ class MainFragment : Fragment() {
     private fun parseWeatherData(result: String) {
         val mainObject =
             JSONObject(result) //MainObject - это основной джсон обджект, внутри которого маленькие джсон обджекты
+            parseCurrentData(mainObject)
+    }
+
+    private fun parseCurrentData(mainObject: JSONObject){ //эта функция исключительно для заполнения сновной карточки
         val item = WeatherModel( //сюда и будем передавать данные
             mainObject.getJSONObject("location").getString("name"),
             mainObject.getJSONObject("current").getString("last_updated"),
