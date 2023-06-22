@@ -88,22 +88,30 @@ class MainFragment : Fragment() {
         val request = StringRequest(
             Request.Method.GET,
             url,
-            {
-                result -> Log.d("MyLog", "Result: $result")
+            { result ->
+                parseWeatherData(result)
+                Log.d("MyLog", "Result: $result")
             },
-            {
-                error -> Log.d("MyLog", "Error: $error")
+            { error ->
+                Log.d("MyLog", "Error: $error")
             },
 
-        )
+            )
         queue.add(request)
     }
 
-    private fun parseWeatherData(result: String){
-        val mainObject = JSONObject(result) //MainObject - это основной джсон обджект, внутри которого маленькие джсон обджекты
+    private fun parseWeatherData(result: String) {
+        val mainObject =
+            JSONObject(result) //MainObject - это основной джсон обджект, внутри которого маленькие джсон обджекты
         val item = WeatherModel( //сюда и будем передавать данные
-            mainObject.getJSONObject("location").getString("name")
-
+            mainObject.getJSONObject("location").getString("name"),
+            mainObject.getJSONObject("current").getString("last_updated"),
+            mainObject.getJSONObject("current").getJSONObject("condition").getString("text"),
+            mainObject.getJSONObject("current").getString("temp_c"),
+            "",
+            "",
+            mainObject.getJSONObject("current").getJSONObject("condition").getString("icon"),
+            ""
         )
     }
 
