@@ -16,8 +16,10 @@ import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.google.android.material.tabs.TabLayoutMediator
+import org.json.JSONObject
 import ru.startandroid.develop.weatherappattempt2.R
 import ru.startandroid.develop.weatherappattempt2.adapters.VpAdapter
+import ru.startandroid.develop.weatherappattempt2.adapters.WeatherModel
 import ru.startandroid.develop.weatherappattempt2.databinding.FragmentMainBinding
 
 const val API_KEY = "9562bba8a2bd4c1eae0142135232604"
@@ -95,6 +97,14 @@ class MainFragment : Fragment() {
 
         )
         queue.add(request)
+    }
+
+    private fun parseWeatherData(result: String){
+        val mainObject = JSONObject(result) //MainObject - это основной джсон обджект, внутри которого маленькие джсон обджекты
+        val item = WeatherModel( //сюда и будем передавать данные
+            mainObject.getJSONObject("location").getString("name")
+
+        )
     }
 
     companion object {

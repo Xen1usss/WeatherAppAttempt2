@@ -1,7 +1,7 @@
 package ru.startandroid.develop.weatherappattempt2.adapters
 
 data class WeatherModel(
-    //те - группа переменных
+    //те - группа/образец переменных
     val city: String,
     val time: String,
     val condition: String,
