@@ -104,7 +104,7 @@ class MainFragment : Fragment() {
         val mainObject =
             JSONObject(result) //MainObject - это основной джсон обджект, внутри которого маленькие джсон обджекты
         val list = parseDays(mainObject)
-        parseCurrentData(mainObject)
+        parseCurrentData(mainObject, list[0])
     }
 
     private fun parseDays(mainObject: JSONObject): List<WeatherModel> { //функция получения данных для всех нужных дней
@@ -128,16 +128,16 @@ class MainFragment : Fragment() {
         return list
     }
 
-    private fun parseCurrentData(mainObject: JSONObject) { //эта функция исключительно для заполнения сновной карточки
+    private fun parseCurrentData(mainObject: JSONObject, weatherItem: WeatherModel) { //эта функция исключительно для заполнения сновной карточки
         val item = WeatherModel( //сюда и будем передавать данные
             mainObject.getJSONObject("location").getString("name"),
             mainObject.getJSONObject("current").getString("last_updated"),
             mainObject.getJSONObject("current").getJSONObject("condition").getString("text"),
             mainObject.getJSONObject("current").getString("temp_c"),
-            "",
-            "",
+            weatherItem.maxTemp,
+            weatherItem.minTemp ,
             mainObject.getJSONObject("current").getJSONObject("condition").getString("icon"),
-            ""
+            weatherItem.hours
         )
     } //функция получения данных для сегодняшнего дня
 
