@@ -12,6 +12,8 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.activityViewModels
+import coil.Coil
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
@@ -35,6 +37,7 @@ class MainFragment : Fragment() {
     )
     private lateinit var pLauncher: ActivityResultLauncher<String> //в треуг. скобках тип данных, который передаем
     private lateinit var binding: FragmentMainBinding //переменная, в которой мы будем хранить эту инстанцию
+    private val model: MainViewModel by activityViewModels() //инициализировали класс
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,6 +52,8 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         checkPermission()
         init()
+        updateCurrentCard() //вызвали функцию
+        requestWeatherData("London")
     }
 
     private fun init() = with(binding) { //в этой функции все инициализируем
@@ -60,6 +65,18 @@ class MainFragment : Fragment() {
     }.attach()
 
     //инициализируем/регистрируем pLauncher
+
+    private fun updateCurrentCard() = with(binding) {//подключаем байндинг
+        model.LiveDataCurrent.observe(viewLifecycleOwner) {
+            //app server который делает то не знаю что вроде обновляет все сам
+            tvData.text = it.time
+            tvCity.text = it.city
+            tvCurrentTemp.text = it.currentTemp
+            tvCondition.text = it.condition
+            Coil.get().load(it.imageUrl).into(imWeather) //урок 14 - 8:30 - надо как-то достать изображение
+        }
+    }
+
     private fun permissionListener() { //проверка на разрешение в реальном времени
         pLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
             Toast.makeText(activity, "Permission is $it", Toast.LENGTH_LONG).show()
@@ -128,17 +145,21 @@ class MainFragment : Fragment() {
         return list
     }
 
-    private fun parseCurrentData(mainObject: JSONObject, weatherItem: WeatherModel) { //эта функция исключительно для заполнения сновной карточки
+    private fun parseCurrentData(
+        mainObject: JSONObject,
+        weatherItem: WeatherModel
+    ) { //эта функция исключительно для заполнения основной карточки
         val item = WeatherModel( //сюда и будем передавать данные
             mainObject.getJSONObject("location").getString("name"),
             mainObject.getJSONObject("current").getString("last_updated"),
             mainObject.getJSONObject("current").getJSONObject("condition").getString("text"),
             mainObject.getJSONObject("current").getString("temp_c"),
             weatherItem.maxTemp,
-            weatherItem.minTemp ,
+            weatherItem.minTemp,
             mainObject.getJSONObject("current").getJSONObject("condition").getString("icon"),
             weatherItem.hours
         )
+        model.LiveDataCurrent.value = item
     } //функция получения данных для сегодняшнего дня
 
     companion object {
