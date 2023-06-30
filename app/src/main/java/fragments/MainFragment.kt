@@ -68,12 +68,14 @@ class MainFragment : Fragment() {
 
     private fun updateCurrentCard() = with(binding) {//подключаем байндинг
         model.LiveDataCurrent.observe(viewLifecycleOwner) {
+            val maxMinTemp = "${it.maxTemp}C°/${it.minTemp}C°"
             //app server который делает то не знаю что вроде обновляет все сам
             tvData.text = it.time
             tvCity.text = it.city
             tvCurrentTemp.text = it.currentTemp
-            tvCondition.text = it.condition
-            Coil.get().load(it.imageUrl).into(imWeather) //урок 14 - 8:30 - надо как-то достать изображение
+            tvMaxMin.text = maxMinTemp
+            //здесь по идее еще должен быть прописан tv condition, но его у меня почему-то нет
+            //Coil.get().load(it.imageUrl).into(imWeather) //урок 14 - 8:30 - надо как-то достать изображение
         }
     }
 
