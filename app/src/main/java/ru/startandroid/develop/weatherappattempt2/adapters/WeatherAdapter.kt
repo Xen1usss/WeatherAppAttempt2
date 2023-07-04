@@ -19,7 +19,9 @@ class WeatherAdapter : ListAdapter<WeatherModel, WeatherAdapter.Holder> (Compara
             tvData.text = item.time
             tvCondition.text = item.condition
             tvTemp.text = item.currentTemp
-
+            //вот тут нужно разобраться в библиотеках и добавить имедж примерно как в сточке ниже
+            //Picasso(у меня Coil).get().load("https:"+ item.imageUrl)into(im)
+            //картинка из карточек во фраменте hours справа
         }
     }
 
