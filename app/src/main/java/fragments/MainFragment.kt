@@ -66,7 +66,7 @@ class MainFragment : Fragment() {
 
     //инициализируем/регистрируем pLauncher
 
-    private fun updateCurrentCard() = with(binding) {//подключаем байндинг
+    private fun updateCurrentCard() = with(binding) {//call back
         model.LiveDataCurrent.observe(viewLifecycleOwner) {
             val maxMinTemp = "${it.maxTemp}C°/${it.minTemp}C°"
             //app server который делает то не знаю что вроде обновляет все сам
@@ -75,7 +75,7 @@ class MainFragment : Fragment() {
             tvCurrentTemp.text = it.currentTemp
             tvMaxMin.text = maxMinTemp
             //здесь по идее еще должен быть прописан tv condition, но его у меня почему-то нет
-            //Coil.get().load(it.imageUrl).into(imWeather) //урок 14 - 8:30 - надо как-то достать изображение
+            //Coil.get().load(it.imageUrl).into(imWeather) //урок 14 - 8:30 - надо как-то достать изображение,  там используется библиотека пикассо, а у меня коил
         }
     }
 
@@ -150,7 +150,7 @@ class MainFragment : Fragment() {
     private fun parseCurrentData(
         mainObject: JSONObject,
         weatherItem: WeatherModel
-    ) { //эта функция исключительно для заполнения основной карточки
+    ) { //эта функция исключительно для заполнения основной верхней карточки
         val item = WeatherModel( //сюда и будем передавать данные
             mainObject.getJSONObject("location").getString("name"),
             mainObject.getJSONObject("current").getString("last_updated"),
