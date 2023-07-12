@@ -52,6 +52,8 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         checkPermission()
         init()
+        updateCurrentCard()
+        requestWeatherData("London")
     }
 
     private fun init() = with(binding) { //в этой функции все инициализируем
@@ -62,8 +64,15 @@ class MainFragment : Fragment() {
         }
     }.attach()
 
-    private fun updateCurrentCard(){
+    private fun updateCurrentCard() = with(binding){
         model.LiveDataCurrent.observe(viewLifecycleOwner){//app сервер, который по умолчанию передает переменную WeatherModel
+            val maxMinTemp = "${it.maxTemp}C/${it.minTemp}C"
+            tvData.text = it.time
+            tvCity.text = it.city
+            tvCurrentTemp.text = it.currentTemp
+            tvMaxMin.text = maxMinTemp
+            /*что-то с ошибкой */ //coil.get().load(it.imageUrl).into(imWeather)
+
 
         }
     }
@@ -149,6 +158,7 @@ class MainFragment : Fragment() {
             mainObject.getJSONObject("current").getJSONObject("condition").getString("icon"),
             weatherItem.hours
         )
+        model.LiveDataCurrent.value = item
     } //функция получения данных для сегодняшнего дня
 
     companion object {
