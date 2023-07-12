@@ -12,6 +12,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.activityViewModels
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
@@ -35,6 +36,8 @@ class MainFragment : Fragment() {
     )
     private lateinit var pLauncher: ActivityResultLauncher<String> //в треуг. скобках тип данных, который передаем
     private lateinit var binding: FragmentMainBinding //переменная, в которой мы будем хранить эту инстанцию
+    private val model: MainViewModel by activityViewModels()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -58,6 +61,13 @@ class MainFragment : Fragment() {
             tab.text = tList[pos] // на tab нажимаем, pos - позиция
         }
     }.attach()
+
+    private fun updateCurrentCard(){
+        model.LiveDataCurrent.observe(viewLifecycleOwner){//app сервер, который по умолчанию передает переменную WeatherModel
+
+        }
+    }
+
 
     //инициализируем/регистрируем pLauncher
     private fun permissionListener() { //проверка на разрешение в реальном времени
