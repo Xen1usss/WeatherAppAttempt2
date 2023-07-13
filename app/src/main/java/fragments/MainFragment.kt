@@ -151,7 +151,7 @@ class MainFragment : Fragment() {
         val item = WeatherModel( //сюда и будем передавать данные
             mainObject.getJSONObject("location").getString("name"),
             mainObject.getJSONObject("current").getString("last_updated"),
-            mainObject.getJSONObject("current").getJSONObject("condition").getString("text"),
+            //mainObject.getJSONObject("current").getJSONObject("condition").getString("text"),
             mainObject.getJSONObject("current").getString("temp_c"),
             weatherItem.maxTemp,
             weatherItem.minTemp ,
