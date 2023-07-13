@@ -123,7 +123,7 @@ class MainFragment : Fragment() {
         val mainObject =
             JSONObject(result) //MainObject - это основной джсон обджект, внутри которого маленькие джсон обджекты
         val list = parseDays(mainObject)
-        parseCurrentData(mainObject, list[0])
+        parseCurrentData(mainObject, list[0]) // 0 - самый первый элемент, типа сегодняшний день
     }
 
     private fun parseDays(mainObject: JSONObject): List<WeatherModel> { //функция получения данных для всех нужных дней
