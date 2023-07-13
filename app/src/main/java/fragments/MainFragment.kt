@@ -135,7 +135,7 @@ class MainFragment : Fragment() {
             val item = WeatherModel(
                 name,
                 day.getString("date"),
-                day.getJSONObject("day ").getJSONObject("condition").getString("text"),
+                // day.getJSONObject("day ").getJSONObject("condition").getString("text"),
                 "",
                 day.getJSONObject("day").getString("maxtemp_c"),
                 day.getJSONObject("day").getString("mintemp_c"),
