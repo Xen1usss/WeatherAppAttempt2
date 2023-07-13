@@ -66,7 +66,7 @@ class MainFragment : Fragment() {
 
     private fun updateCurrentCard() = with(binding){
         model.LiveDataCurrent.observe(viewLifecycleOwner){//app сервер, который по умолчанию передает переменную WeatherModel
-            val maxMinTemp = "${it.maxTemp}C/${it.minTemp}C"
+            val maxMinTemp = "${it.maxTemp}C/${it.minTemp}C" //по-другому WeatherModel выше можно прописать "item -->"
             tvData.text = it.time
             tvCity.text = it.city
             tvCurrentTemp.text = it.currentTemp
