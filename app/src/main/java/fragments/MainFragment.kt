@@ -50,6 +50,7 @@ class MainFragment : Fragment() {
     //функция, когда основной фрагмент загружен, когда все view уже созданы
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        //todo add tabs
         checkPermission()
         init()
         updateCurrentCard()
@@ -111,7 +112,8 @@ class MainFragment : Fragment() {
                 Log.d("MyLog", "Result: $result")
             },
             { error ->
-                Log.d("MyLog", "Error: $error")
+                error.printStackTrace()
+                Log.e("MyLog", "Error: $error")
             },
 
             )
@@ -138,8 +140,9 @@ class MainFragment : Fragment() {
                 "",
                 day.getJSONObject("day").getString("maxtemp_c"),
                 day.getJSONObject("day").getString("mintemp_c"),
-                day.getJSONObject("day ").getJSONObject("condition").getString("icon"),
+                day.getJSONObject("day").getJSONObject("condition").getString("icon"),
                 day.getJSONArray("hour").toString()
+
             )
             list.add(item)
         }
