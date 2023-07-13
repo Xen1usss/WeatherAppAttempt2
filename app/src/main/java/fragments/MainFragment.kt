@@ -64,16 +64,15 @@ class MainFragment : Fragment() {
         }
     }.attach()
 
-    private fun updateCurrentCard() = with(binding){
-        model.LiveDataCurrent.observe(viewLifecycleOwner){//app сервер, который по умолчанию передает переменную WeatherModel
-            val maxMinTemp = "${it.maxTemp}C/${it.minTemp}C" //по-другому WeatherModel выше можно прописать "item -->"
+    private fun updateCurrentCard() = with(binding) {
+        model.LiveDataCurrent.observe(viewLifecycleOwner) {//app сервер, который по умолчанию передает переменную WeatherModel
+            val maxMinTemp =
+                "${it.maxTemp}C/${it.minTemp}C" //по-другому WeatherModel выше можно прописать "item -->"
             tvData.text = it.time
             tvCity.text = it.city
             tvCurrentTemp.text = it.currentTemp
             tvMaxMin.text = maxMinTemp
             /*что-то с ошибкой */ //coil.get().load(it.imageUrl).into(imWeather)
-
-
         }
     }
 
@@ -147,14 +146,17 @@ class MainFragment : Fragment() {
         return list
     }
 
-    private fun parseCurrentData(mainObject: JSONObject, weatherItem: WeatherModel) { //эта функция исключительно для заполнения сновной карточки
+    private fun parseCurrentData(
+        mainObject: JSONObject,
+        weatherItem: WeatherModel
+    ) { //эта функция исключительно для заполнения сновной карточки
         val item = WeatherModel( //сюда и будем передавать данные
             mainObject.getJSONObject("location").getString("name"),
             mainObject.getJSONObject("current").getString("last_updated"),
             //mainObject.getJSONObject("current").getJSONObject("condition").getString("text"),
             mainObject.getJSONObject("current").getString("temp_c"),
             weatherItem.maxTemp,
-            weatherItem.minTemp ,
+            weatherItem.minTemp,
             mainObject.getJSONObject("current").getJSONObject("condition").getString("icon"),
             weatherItem.hours
         )
