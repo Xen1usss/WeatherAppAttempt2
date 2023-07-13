@@ -17,7 +17,7 @@ class WeatherAdapter : ListAdapter<WeatherModel, WeatherAdapter.Holder> (Compara
         fun bind(item: WeatherModel) = with(binding) {  //и здесь данная функция заполняет этот один элемент
             //with позволяет прямо в теле функции прописать присвоение к вью из итем
             tvData.text = item.time
-            tvCondition.text = item.condition
+            //tvCondition.text = item.condition
             tvTemp.text = item.currentTemp
 
         }
