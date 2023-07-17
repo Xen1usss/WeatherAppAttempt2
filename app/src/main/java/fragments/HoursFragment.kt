@@ -32,19 +32,20 @@ class HoursFragment : Fragment() {
         initRcView()
     }
 
-    private fun initRcView() = with(binding) { //с помощью этого мы получаем доступ к элементам экрана
-        rcView.layoutManager = LinearLayoutManager(activity)
-        adapter = WeatherAdapter()
-        rcView.adapter = adapter
-        val list = listOf(
+    private fun initRcView() =
+        with(binding) { //с помощью этого мы получаем доступ к элементам экрана
+            rcView.layoutManager = LinearLayoutManager(activity)
+            adapter = WeatherAdapter()
+            rcView.adapter = adapter
+            val list = listOf(
 
-            WeatherModel("", "12:00",  "25°C", "", "", "", ""), // здесь тоже был кондишн
-            WeatherModel("", "13:00",  "27°C", "", "", "", ""),
-            WeatherModel("", "14:00",  "35°C", "", "", "", "")
+                WeatherModel("", "12:00", "25°C", "", "", "", ""), // здесь тоже был кондишн
+                WeatherModel("", "13:00", "27°C", "", "", "", ""),
+                WeatherModel("", "14:00", "35°C", "", "", "", "")
 
-        )
-        adapter.submitList(list) //загружаем список
-    }
+            )
+            adapter.submitList(list) //загружаем список
+        }
 
 
     companion object {
