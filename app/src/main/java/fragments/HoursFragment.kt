@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.json.JSONArray
+import org.json.JSONObject
 import ru.startandroid.develop.weatherappattempt2.R
 import ru.startandroid.develop.weatherappattempt2.adapters.WeatherAdapter
 import ru.startandroid.develop.weatherappattempt2.adapters.WeatherModel
@@ -34,7 +35,7 @@ class HoursFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initRcView()
         model.LiveDataCurrent.observe(viewLifecycleOwner){//app server
-
+            adapter.submitList(getHoursList(it))
         }
     }
 
@@ -43,13 +44,23 @@ class HoursFragment : Fragment() {
             rcView.layoutManager = LinearLayoutManager(activity)
             adapter = WeatherAdapter()
             rcView.adapter = adapter
-
         }
 
-    private fun getHoursList(item: WeatherModel): List<WeatherModel>{
-        val hoursArray = JSONArray(item.hours)
+    private fun getHoursList(wItem: WeatherModel): List<WeatherModel>{
+        val hoursArray = JSONArray(wItem.hours)
         val list = ArrayList<WeatherModel>()
-
+        for (i in 0 until hoursArray.length()){
+            val item = WeatherModel(
+                wItem.city,
+                (hoursArray[i] as JSONObject).getString("time"),
+                (hoursArray[i] as JSONObject).getString("temp_c"),
+                "", "",
+                (hoursArray[i] as JSONObject).getJSONObject("condition").getString("icon"),
+                ""
+            )
+            list.add(item)
+        }
+        return list
     }
 
     companion object {
