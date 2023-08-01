@@ -34,7 +34,7 @@ class WeatherAdapter : ListAdapter<WeatherModel, WeatherAdapter.Holder> (Compara
 
 
     }
-
+//что-то там
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder { //метод 1 - создает эелемент
         val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item, parent, false) //создается вью
         return Holder(view)//создается холдер
