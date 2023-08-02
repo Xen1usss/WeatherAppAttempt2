@@ -6,7 +6,7 @@ import android.util.Log
 import fragments.MainFragment
 
 class MainActivity :
-    AppCompatActivity() { //мейн активити будет использоваться только для запуска фрагментов
+    AppCompatActivity() { //майн активити будет использоваться только для запуска фрагментов
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
