@@ -13,7 +13,6 @@ import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.activityViewModels
-import coil.Coil
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
@@ -37,7 +36,8 @@ class MainFragment : Fragment() {
     )
     private lateinit var pLauncher: ActivityResultLauncher<String> //в треуг. скобках тип данных, который передаем
     private lateinit var binding: FragmentMainBinding //переменная, в которой мы будем хранить эту инстанцию
-    private val model: MainViewModel by activityViewModels() //инициализировали класс
+    private val model: MainViewModel by activityViewModels()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,9 +50,10 @@ class MainFragment : Fragment() {
     //функция, когда основной фрагмент загружен, когда все view уже созданы
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        //todo add tabs
         checkPermission()
         init()
-        updateCurrentCard() //вызвали функцию
+        updateCurrentCard()
         requestWeatherData("London")
     }
 
@@ -64,21 +65,20 @@ class MainFragment : Fragment() {
         }
     }.attach()
 
-    //инициализируем/регистрируем pLauncher
-
-    private fun updateCurrentCard() = with(binding) {//call back
-        model.LiveDataCurrent.observe(viewLifecycleOwner) {
-            val maxMinTemp = "${it.maxTemp}C°/${it.minTemp}C°"
-            //app server который делает то не знаю что вроде обновляет все сам
+    private fun updateCurrentCard() = with(binding) {
+        model.LiveDataCurrent.observe(viewLifecycleOwner) {//app сервер, который по умолчанию передает переменную WeatherModel
+            val maxMinTemp =
+                "${it.maxTemp}C/${it.minTemp}C" //по-другому WeatherModel выше можно прописать "item -->"
             tvData.text = it.time
             tvCity.text = it.city
             tvCurrentTemp.text = it.currentTemp
             tvMaxMin.text = maxMinTemp
-            //здесь по идее еще должен быть прописан tv condition, но его у меня почему-то нет
-            //Coil.get().load(it.imageUrl).into(imWeather) //урок 14 - 8:30 - надо как-то достать изображение,  там используется библиотека пикассо, а у меня коил
+            /*что-то с ошибкой */ //coil.get().load(it.imageUrl).into(imWeather)
         }
     }
+//что-то
 
+    //инициализируем/регистрируем pLauncher
     private fun permissionListener() { //проверка на разрешение в реальном времени
         pLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
             Toast.makeText(activity, "Permission is $it", Toast.LENGTH_LONG).show()
@@ -112,7 +112,8 @@ class MainFragment : Fragment() {
                 Log.d("MyLog", "Result: $result")
             },
             { error ->
-                Log.d("MyLog", "Error: $error")
+                error.printStackTrace()
+                Log.e("MyLog", "Error: $error")
             },
 
             )
@@ -123,7 +124,7 @@ class MainFragment : Fragment() {
         val mainObject =
             JSONObject(result) //MainObject - это основной джсон обджект, внутри которого маленькие джсон обджекты
         val list = parseDays(mainObject)
-        parseCurrentData(mainObject, list[0])
+        parseCurrentData(mainObject, list[0]) // 0 - самый первый элемент, типа сегодняшний день
     }
 
     private fun parseDays(mainObject: JSONObject): List<WeatherModel> { //функция получения данных для всех нужных дней
@@ -135,12 +136,13 @@ class MainFragment : Fragment() {
             val item = WeatherModel(
                 name,
                 day.getString("date"),
-                day.getJSONObject("day ").getJSONObject("condition").getString("text"),
+                // day.getJSONObject("day ").getJSONObject("condition").getString("text"),
                 "",
                 day.getJSONObject("day").getString("maxtemp_c"),
                 day.getJSONObject("day").getString("mintemp_c"),
-                day.getJSONObject("day ").getJSONObject("condition").getString("icon"),
+                day.getJSONObject("day").getJSONObject("condition").getString("icon"),
                 day.getJSONArray("hour").toString()
+
             )
             list.add(item)
         }
@@ -150,11 +152,11 @@ class MainFragment : Fragment() {
     private fun parseCurrentData(
         mainObject: JSONObject,
         weatherItem: WeatherModel
-    ) { //эта функция исключительно для заполнения основной верхней карточки
+    ) { //эта функция исключительно для заполнения сновной карточки
         val item = WeatherModel( //сюда и будем передавать данные
             mainObject.getJSONObject("location").getString("name"),
             mainObject.getJSONObject("current").getString("last_updated"),
-            mainObject.getJSONObject("current").getJSONObject("condition").getString("text"),
+            //mainObject.getJSONObject("current").getJSONObject("condition").getString("text"),
             mainObject.getJSONObject("current").getString("temp_c"),
             weatherItem.maxTemp,
             weatherItem.minTemp,

@@ -19,7 +19,7 @@ import ru.startandroid.develop.weatherappattempt2.databinding.FragmentMainBindin
 class HoursFragment : Fragment() {
     private lateinit var binding: FragmentHoursBinding
     private lateinit var adapter: WeatherAdapter
-    private val model: MainViewModel by activityViewModels() //это тот же самый класс, у которого есть доступ к liveDataCurrent
+    private val model: MainViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,37 +34,35 @@ class HoursFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRcView()
-        model.LiveDataCurrent.observe(viewLifecycleOwner){//это ап сервер
-        adapter.submitList(getHoursList(it))
+        model.LiveDataCurrent.observe(viewLifecycleOwner){//app server
+            adapter.submitList(getHoursList(it))
         }
     }
 
-    private fun initRcView() = with(binding) { //с помощью этого мы получаем доступ к элементам экрана
-        rcView.layoutManager = LinearLayoutManager(activity)
-        adapter = WeatherAdapter()
-        rcView.adapter = adapter
+    private fun initRcView() =
+        with(binding) { //с помощью этого мы получаем доступ к элементам экрана
+            rcView.layoutManager = LinearLayoutManager(activity)
+            adapter = WeatherAdapter()
+            rcView.adapter = adapter
+        }
 
-    }
-
-    private fun getHoursList(wItem: WeatherModel): List<WeatherModel> { //теперь создаем цикл, с помощью которого будем доставать информацию из джсон массива
+    private fun getHoursList(wItem: WeatherModel): List<WeatherModel>{
         val hoursArray = JSONArray(wItem.hours)
         val list = ArrayList<WeatherModel>()
-
-        for(i in 0 until hoursArray.length()){ //24 эелемента = запустится 24 раза
+        for (i in 0 until hoursArray.length()){
             val item = WeatherModel(
                 wItem.city,
                 (hoursArray[i] as JSONObject).getString("time"),
-                (hoursArray[i] as JSONObject).getJSONObject("condition").getString("text"),
                 (hoursArray[i] as JSONObject).getString("temp_c"),
-                "",
-                "",
+                "", "",
                 (hoursArray[i] as JSONObject).getJSONObject("condition").getString("icon"),
                 ""
-                )
-            list.add(item) //создали выше item и тут же передаем его в список
+            )
+            list.add(item)
         }
         return list
     }
+
     companion object {
 
         @JvmStatic

@@ -8,7 +8,7 @@
     <string name="currentTemp">20°C</string>
     <string name="currentTempF">25°C</string>
     <string name="minMaxTemp">35°C/25°C</string>
-    <string name="condition">Sunny</string>
+    <string name="condition"></string>
     <string name="empty">Empty</string>
 
 </resources>

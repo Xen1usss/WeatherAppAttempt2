@@ -17,7 +17,7 @@ class WeatherAdapter : ListAdapter<WeatherModel, WeatherAdapter.Holder> (Compara
         fun bind(item: WeatherModel) = with(binding) {  //и здесь данная функция заполняет этот один элемент
             //with позволяет прямо в теле функции прописать присвоение к вью из итем
             tvData.text = item.time
-            tvCondition.text = item.condition
+            //tvCondition.text = item.condition
             tvTemp.text = item.currentTemp
             //вот тут нужно разобраться в библиотеках и добавить имедж примерно как в сточке ниже
             //Picasso(у меня Coil).get().load("https:"+ item.imageUrl)into(im)
@@ -36,7 +36,7 @@ class WeatherAdapter : ListAdapter<WeatherModel, WeatherAdapter.Holder> (Compara
 
 
     }
-
+//что-то
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder { //метод 1 - создает эелемент
         val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item, parent, false) //создается вью
         return Holder(view)//создается холдер
