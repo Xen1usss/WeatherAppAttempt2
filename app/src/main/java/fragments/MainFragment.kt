@@ -76,7 +76,7 @@ class MainFragment : Fragment() {
             /*что-то с ошибкой */ //coil.get().load(it.imageUrl).into(imWeather)
         }
     }
-
+//что-то
 
     //инициализируем/регистрируем pLauncher
     private fun permissionListener() { //проверка на разрешение в реальном времени
