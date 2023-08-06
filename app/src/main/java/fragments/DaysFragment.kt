@@ -6,15 +6,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import ru.startandroid.develop.weatherappattempt2.R
+import ru.startandroid.develop.weatherappattempt2.databinding.FragmentDaysBinding
 
 
 class DaysFragment : Fragment() {
+    private lateinit var binding: FragmentDaysBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+        binding = FragmentDaysBinding
         return inflater.inflate(R.layout.fragment_days, container, false)
     }
 
