@@ -18,7 +18,7 @@ class WeatherAdapter : ListAdapter<WeatherModel, WeatherAdapter.Holder> (Compara
             //with позволяет прямо в теле функции прописать присвоение к вью из итем
             tvData.text = item.time
             //tvCondition.text = item.condition
-            tvTemp.text = item.currentTemp
+            tvTemp.text = item.currentTemp.ifEmpty { "${item.maxTemp} C / ${item.minTemp} C" }
             //вот тут нужно разобраться в библиотеках и добавить имедж примерно как в сточке ниже
             //Picasso(у меня Coil).get().load("https:"+ item.imageUrl)into(im)
             //картинка из карточек во фраменте hours справа
