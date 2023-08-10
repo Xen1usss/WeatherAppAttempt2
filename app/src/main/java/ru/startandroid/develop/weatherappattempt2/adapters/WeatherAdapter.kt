@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import ru.startandroid.develop.weatherappattempt2.R
 import ru.startandroid.develop.weatherappattempt2.databinding.ListItemBinding
 
@@ -21,6 +22,7 @@ class WeatherAdapter : ListAdapter<WeatherModel, WeatherAdapter.Holder> (Compara
             tvTemp.text = item.currentTemp.ifEmpty { "${item.maxTemp} C / ${item.minTemp} C" }
             //вот тут нужно разобраться в библиотеках и добавить имедж примерно как в сточке ниже
             //Picasso(у меня Coil).get().load("https:"+ item.imageUrl)into(im)
+            im.load("https:"+ item.imageUrl)
             //картинка из карточек во фраменте hours справа
         }
     }
