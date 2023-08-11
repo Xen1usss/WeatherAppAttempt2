@@ -42,7 +42,7 @@ class HoursFragment : Fragment() {
     private fun initRcView() =
         with(binding) { //с помощью этого мы получаем доступ к элементам экрана
             rcView.layoutManager = LinearLayoutManager(activity)
-            adapter = WeatherAdapter()
+            adapter = WeatherAdapter(null) //тк тут прослушивать нажатия не нужно
             rcView.adapter = adapter
         }
 

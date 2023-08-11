@@ -9,10 +9,11 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import ru.startandroid.develop.weatherappattempt2.R
 import ru.startandroid.develop.weatherappattempt2.adapters.WeatherAdapter
+import ru.startandroid.develop.weatherappattempt2.adapters.WeatherModel
 import ru.startandroid.develop.weatherappattempt2.databinding.FragmentDaysBinding
 
-
-class DaysFragment : Fragment() {
+//добавляем сюда листенер из везер адаптер, тк именно здесь нужно прослушивать нажатия
+class DaysFragment : Fragment(), WeatherAdapter.Listener {
     private lateinit var adapter: WeatherAdapter
     private lateinit var binding: FragmentDaysBinding
     private val model: MainViewModel by activityViewModels() //это доступ к классу MainViewModel
@@ -34,7 +35,7 @@ class DaysFragment : Fragment() {
     }
 
     private fun init() = with(binding){
-        adapter = WeatherAdapter()
+        adapter = WeatherAdapter(this@DaysFragment) //просто this ссылался бы просто на байндинг
         rcView.layoutManager = LinearLayoutManager(activity) //активити как контекс здесь
         rcView.adapter = adapter //таким образом подключаем к rcView адаптер
     }
@@ -43,5 +44,9 @@ class DaysFragment : Fragment() {
 
         fun newInstance() = DaysFragment()
                 }
-            }
+
+    override fun onClick(item: WeatherModel) { //запускается при нажатии на день и возвращает результат
+        model.LiveDataCurrent.value = item
+    }
+}
 

@@ -10,20 +10,25 @@ import coil.load
 import ru.startandroid.develop.weatherappattempt2.R
 import ru.startandroid.develop.weatherappattempt2.databinding.ListItemBinding
 
-class WeatherAdapter : ListAdapter<WeatherModel, WeatherAdapter.Holder> (Comparator()) { //в адаптер передается: элемент из списка и класс, который описывает, как заполнять элемент списка
+class WeatherAdapter(val listener: Listener? ) : ListAdapter<WeatherModel, WeatherAdapter.Holder> (Comparator()) { //в адаптер передается: элемент из списка и класс, который описывает, как заполнять элемент списка
     //то есть холдер хранит в себе логику как заполнять элемент и сам элемент
     //то есть листАдаптер принимает список, с помощью которого заполняет ресайклер
-    class Holder(view: View) : RecyclerView.ViewHolder(view) { //в аргументе один вью-элемент который мы передаем и который сохраняется для ресайкл
+    class Holder(view: View, val listener: Listener?) : RecyclerView.ViewHolder(view) { //в аргументе один вью-элемент который мы передаем и который сохраняется для ресайкл
         val binding = ListItemBinding.bind(view)  //это будущий вью байндинг - класс разметки, который хранит в себе элементы
+        var itemTemp: WeatherModel? = null
+        init {
+            itemView.setOnClickListener{
+                itemTemp?.let { it1 -> listener?.onClick(it1) }
+            }
+        }
+
         fun bind(item: WeatherModel) = with(binding) {  //и здесь данная функция заполняет этот один элемент
+            itemTemp = item
             //with позволяет прямо в теле функции прописать присвоение к вью из итем
             tvData.text = item.time
             //tvCondition.text = item.condition
             tvTemp.text = item.currentTemp.ifEmpty { "${item.maxTemp} C / ${item.minTemp} C" }
-            //вот тут нужно разобраться в библиотеках и добавить имедж примерно как в сточке ниже
-            //Picasso(у меня Coil).get().load("https:"+ item.imageUrl)into(im)
             im.load("https:"+ item.imageUrl)
-            //картинка из карточек во фраменте hours справа
         }
     }
 
@@ -47,6 +52,10 @@ class WeatherAdapter : ListAdapter<WeatherModel, WeatherAdapter.Holder> (Compara
     override fun onBindViewHolder(holder: Holder, position: Int) { //метод 2 - заполняет элемент
         // функция выдает сам холдер и позицию, на которой он создался
         holder.bind(getItem(position))
+    }
+
+    interface Listener{
+        fun onClick(item: WeatherModel)
     }
 
 }
