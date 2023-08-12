@@ -46,7 +46,7 @@ class WeatherAdapter(val listener: Listener? ) : ListAdapter<WeatherModel, Weath
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder { //метод 1 - создает эелемент
         val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item, parent, false) //создается вью
-        return Holder(view)//создается холдер
+        return Holder(view, listener)//создается холдер
     } //эта функция будет запускаться столько раз, сколько элементов в списке
 
     override fun onBindViewHolder(holder: Holder, position: Int) { //метод 2 - заполняет элемент

@@ -71,7 +71,7 @@ class MainFragment : Fragment() {
                 "${it.maxTemp}C/${it.minTemp}C" //по-другому WeatherModel выше можно прописать "item -->"
             tvData.text = it.time
             tvCity.text = it.city
-            tvCurrentTemp.text = it.currentTemp
+            tvCurrentTemp.text = it.currentTemp.ifEmpty {maxMinTemp}
             tvMaxMin.text = maxMinTemp
             /*что-то с ошибкой */ //coil.get().load(it.imageUrl).into(imWeather)
         }
@@ -137,8 +137,8 @@ class MainFragment : Fragment() {
                 day.getString("date"),
                 // day.getJSONObject("day ").getJSONObject("condition").getString("text"),
                 "",
-                day.getJSONObject("day").getString("maxtemp_c"),
-                day.getJSONObject("day").getString("mintemp_c"),
+                day.getJSONObject("day").getString("maxtemp_c").toFloat().toInt().toString(),
+                day.getJSONObject("day").getString("mintemp_c").toFloat().toInt().toString(),
                 day.getJSONObject("day").getJSONObject("condition").getString("icon"),
                 day.getJSONArray("hour").toString()
 
