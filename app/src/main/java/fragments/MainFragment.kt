@@ -73,8 +73,8 @@ class MainFragment : Fragment() {
 
     //функция, с помощью которой будем получать сведения о местоположении
     private fun getLocation(){
-        val ct = CancellationTokenSource
-        fLocationClient.getCurrentLocation(LocationRequest.PRIORITY_HIGH_ACCURACY)
+        val ct = CancellationTokenSource()
+        fLocationClient.getCurrentLocation(LocationRequest.PRIORITY_HIGH_ACCURACY, )
     }
 
     private fun updateCurrentCard() = with(binding) {
