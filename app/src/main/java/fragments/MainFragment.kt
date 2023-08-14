@@ -16,6 +16,10 @@ import androidx.fragment.app.activityViewModels
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.tasks.CancellationTokenSource
 import com.google.android.material.tabs.TabLayoutMediator
 import org.json.JSONObject
 import ru.startandroid.develop.weatherappattempt2.R
@@ -26,6 +30,7 @@ import ru.startandroid.develop.weatherappattempt2.databinding.FragmentMainBindin
 const val API_KEY = "9562bba8a2bd4c1eae0142135232604"
 
 class MainFragment : Fragment() {
+    private lateinit var fLocationClient: FusedLocationProviderClient
     private val fList = listOf(
         HoursFragment.newInstance(),
         DaysFragment.newInstance()
@@ -58,12 +63,19 @@ class MainFragment : Fragment() {
     }
 
     private fun init() = with(binding) { //в этой функции все инициализируем
+        fLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
         val adapter = VpAdapter(activity as FragmentActivity, fList)
         vp.adapter = adapter
         TabLayoutMediator(tabLayout, vp) { tab, pos ->
             tab.text = tList[pos] // на tab нажимаем, pos - позиция
         }
     }.attach()
+
+    //функция, с помощью которой будем получать сведения о местоположении
+    private fun getLocation(){
+        val ct = CancellationTokenSource
+        fLocationClient.getCurrentLocation(LocationRequest.PRIORITY_HIGH_ACCURACY)
+    }
 
     private fun updateCurrentCard() = with(binding) {
         model.LiveDataCurrent.observe(viewLifecycleOwner) {//app сервер, который по умолчанию передает переменную WeatherModel
