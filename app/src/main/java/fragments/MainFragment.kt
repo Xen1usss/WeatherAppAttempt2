@@ -1,6 +1,7 @@
 package fragments
 
 import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -11,6 +12,7 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.activityViewModels
 import com.android.volley.Request
@@ -59,7 +61,7 @@ class MainFragment : Fragment() {
         checkPermission()
         init()
         updateCurrentCard()
-        requestWeatherData("London")
+        getLocation()
     }
 
     private fun init() = with(binding) { //в этой функции все инициализируем
@@ -68,13 +70,30 @@ class MainFragment : Fragment() {
         vp.adapter = adapter
         TabLayoutMediator(tabLayout, vp) { tab, pos ->
             tab.text = tList[pos] // на tab нажимаем, pos - позиция
+        }.attach()
+        ibSync.setOnClickListener{
+            tabLayout.selectTab(tabLayout.getTabAt(0))
+            getLocation()
         }
-    }.attach()
+    }
 
     //функция, с помощью которой будем получать сведения о местоположении
     private fun getLocation(){
-        val ct = CancellationTokenSource()
-        fLocationClient.getCurrentLocation(LocationRequest.PRIORITY_HIGH_ACCURACY, )
+      val ct = CancellationTokenSource()
+        if (ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            return
+        }
+        fLocationClient.getCurrentLocation(LocationRequest.PRIORITY_HIGH_ACCURACY, ct.token)
+            .addOnCompleteListener{
+                requestWeatherData("${it.result.latitude},${it.result.longitude}")
+            }
     }
 
     private fun updateCurrentCard() = with(binding) {
