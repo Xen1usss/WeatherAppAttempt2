@@ -1,7 +1,10 @@
 package fragments
 
 import android.Manifest
+import android.app.LocaleManager
+import android.content.Context
 import android.content.pm.PackageManager
+import android.location.LocationManager
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -21,6 +24,7 @@ import com.android.volley.toolbox.Volley
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.Priority
 import com.google.android.gms.tasks.CancellationTokenSource
 import com.google.android.material.tabs.TabLayoutMediator
 import org.json.JSONObject
@@ -77,6 +81,11 @@ class MainFragment : Fragment() {
         }
     }
 
+    private fun isLocationEnabled(): Boolean {
+        val lm = activity?.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        return lm.isProviderEnabled(LocationManager.GPS_PROVIDER) //возвращает 1/0
+    }
+
     //функция, с помощью которой будем получать сведения о местоположении
     private fun getLocation(){
       val ct = CancellationTokenSource()
@@ -90,7 +99,7 @@ class MainFragment : Fragment() {
         ) {
             return
         }
-        fLocationClient.getCurrentLocation(LocationRequest.PRIORITY_HIGH_ACCURACY, ct.token)
+        fLocationClient.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, ct.token)
             .addOnCompleteListener{
                 requestWeatherData("${it.result.latitude},${it.result.longitude}")
             }
