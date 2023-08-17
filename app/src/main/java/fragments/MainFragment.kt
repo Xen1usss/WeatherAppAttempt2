@@ -75,7 +75,7 @@ class MainFragment : Fragment() {
         TabLayoutMediator(tabLayout, vp) { tab, pos ->
             tab.text = tList[pos] // на tab нажимаем, pos - позиция
         }.attach()
-        ibSync.setOnClickListener{
+        ibSync.setOnClickListener {
             tabLayout.selectTab(tabLayout.getTabAt(0))
             getLocation()
         }
@@ -87,8 +87,8 @@ class MainFragment : Fragment() {
     }
 
     //функция, с помощью которой будем получать сведения о местоположении
-    private fun getLocation(){
-      val ct = CancellationTokenSource()
+    private fun getLocation() {
+        val ct = CancellationTokenSource()
         if (ActivityCompat.checkSelfPermission(
                 requireContext(),
                 Manifest.permission.ACCESS_FINE_LOCATION
@@ -100,7 +100,7 @@ class MainFragment : Fragment() {
             return
         }
         fLocationClient.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, ct.token)
-            .addOnCompleteListener{
+            .addOnCompleteListener {
                 requestWeatherData("${it.result.latitude},${it.result.longitude}")
             }
     }
@@ -111,7 +111,7 @@ class MainFragment : Fragment() {
                 "${it.maxTemp}C/${it.minTemp}C" //по-другому WeatherModel выше можно прописать "item -->"
             tvData.text = it.time
             tvCity.text = it.city
-            tvCurrentTemp.text = it.currentTemp.ifEmpty {maxMinTemp}
+            tvCurrentTemp.text = it.currentTemp.ifEmpty { maxMinTemp }
             tvMaxMin.text = maxMinTemp
             /*что-то с ошибкой */ //coil.get().load(it.imageUrl).into(imWeather)
         }
