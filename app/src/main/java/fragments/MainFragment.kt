@@ -81,6 +81,19 @@ class MainFragment : Fragment() {
         }
     }
 
+    private fun checkLocation(){
+        if(isLocationEnabled()){
+            getLocation()
+        } else {
+            DialogManager.LocationSettingsDialog(requireContext(), object : DialogManager.Listener{
+                override fun onClick() {
+
+                 }
+
+            })
+        }
+    }
+
     private fun isLocationEnabled(): Boolean {
         val lm = activity?.getSystemService(Context.LOCATION_SERVICE) as LocationManager
         return lm.isProviderEnabled(LocationManager.GPS_PROVIDER) //возвращает 1/0
@@ -88,6 +101,10 @@ class MainFragment : Fragment() {
 
     //функция, с помощью которой будем получать сведения о местоположении
     private fun getLocation() {
+        if (!isLocationEnabled()){
+            Toast.makeText(requireContext(), "Location disabled!", Toast.LENGTH_SHORT).show()
+            return
+        }
         val ct = CancellationTokenSource()
         if (ActivityCompat.checkSelfPermission(
                 requireContext(),
