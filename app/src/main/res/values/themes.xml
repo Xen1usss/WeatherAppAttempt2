@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Theme.WeatherAppAttempt2" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimary">#D5A310</item>
         <item name="colorPrimaryVariant">@color/orange</item>
         <!--цвет выше отвечает за цвет статус бара-->
         <item name="colorOnPrimary">@color/white</item>

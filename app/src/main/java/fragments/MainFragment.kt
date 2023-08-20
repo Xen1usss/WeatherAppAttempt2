@@ -3,9 +3,11 @@ package fragments
 import android.Manifest
 import android.app.LocaleManager
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.LocationManager
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -68,6 +70,11 @@ class MainFragment : Fragment() {
         getLocation()
     }
 
+    override fun onResume() {
+        super.onResume()
+        checkLocation()
+    }
+
     private fun init() = with(binding) { //в этой функции все инициализируем
         fLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
         val adapter = VpAdapter(activity as FragmentActivity, fList)
@@ -77,18 +84,18 @@ class MainFragment : Fragment() {
         }.attach()
         ibSync.setOnClickListener {
             tabLayout.selectTab(tabLayout.getTabAt(0))
-            getLocation()
+            checkLocation()
         }
     }
 
-    private fun checkLocation(){
-        if(isLocationEnabled()){
+    private fun checkLocation() {
+        if (isLocationEnabled()) { // если включено местоположение, то...
             getLocation()
         } else {
-            DialogManager.LocationSettingsDialog(requireContext(), object : DialogManager.Listener{
+            DialogManager.LocationSettingsDialog(requireContext(), object : DialogManager.Listener {
                 override fun onClick() {
-
-                 }
+                    startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
+                }
 
             })
         }
@@ -101,7 +108,7 @@ class MainFragment : Fragment() {
 
     //функция, с помощью которой будем получать сведения о местоположении
     private fun getLocation() {
-        if (!isLocationEnabled()){
+        if (!isLocationEnabled()) {
             Toast.makeText(requireContext(), "Location disabled!", Toast.LENGTH_SHORT).show()
             return
         }
