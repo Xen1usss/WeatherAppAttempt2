@@ -107,10 +107,6 @@ class MainFragment : Fragment() {
 
     //функция, с помощью которой будем получать сведения о местоположении
     private fun getLocation() {
-        if (!isLocationEnabled()) {
-            Toast.makeText(requireContext(), "Location disabled!", Toast.LENGTH_SHORT).show()
-            return
-        }
         val ct = CancellationTokenSource()
         if (ActivityCompat.checkSelfPermission(
                 requireContext(),
