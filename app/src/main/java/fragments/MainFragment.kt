@@ -67,7 +67,6 @@ class MainFragment : Fragment() {
         checkPermission()
         init()
         updateCurrentCard()
-        getLocation()
     }
 
     override fun onResume() {
