@@ -29,12 +29,12 @@ class DaysFragment : Fragment(), WeatherAdapter.Listener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init()
-        model.LiveDataList.observe(viewLifecycleOwner){
+        model.LiveDataList.observe(viewLifecycleOwner) {
             adapter.submitList(it)
         }
     }
 
-    private fun init() = with(binding){
+    private fun init() = with(binding) {
         adapter = WeatherAdapter(this@DaysFragment) //просто this ссылался бы просто на байндинг
         rcView.layoutManager = LinearLayoutManager(activity) //активити как контекс здесь
         rcView.adapter = adapter //таким образом подключаем к rcView адаптер
@@ -43,7 +43,7 @@ class DaysFragment : Fragment(), WeatherAdapter.Listener {
     companion object {
 
         fun newInstance() = DaysFragment()
-                }
+    }
 
     override fun onClick(item: WeatherModel) { //запускается при нажатии на день и возвращает результат
         model.LiveDataCurrent.value = item
