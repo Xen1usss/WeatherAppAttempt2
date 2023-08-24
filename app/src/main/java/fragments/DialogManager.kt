@@ -5,7 +5,7 @@ import android.content.Context
 import android.widget.EditText
 
 object DialogManager {
-    fun LocationSettingsDialog(context: Context, listener: Listener) {
+    fun locationSettingsDialog(context: Context, listener: Listener) {
         val builder = AlertDialog.Builder(context)
         val dialog = builder.create()
         dialog.setTitle("Enable location?")
@@ -19,7 +19,7 @@ object DialogManager {
         }
     }
 
-    fun SearchByNameDialog(context: Context, listener: Listener) {
+    fun searchByNameDialog(context: Context, listener: Listener) {
         val builder = AlertDialog.Builder(context)
         val edName = EditText(context)
         builder.setView(edName)
@@ -32,10 +32,10 @@ object DialogManager {
         dialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancel") { _, _ ->
             dialog.dismiss()
         }
-
+    }
 
         interface Listener {
             fun onClick(name: String?)
         }
-    }
+
 }
