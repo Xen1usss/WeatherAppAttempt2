@@ -50,3 +50,4 @@ class DaysFragment : Fragment(), WeatherAdapter.Listener {
     }
 }
 
+

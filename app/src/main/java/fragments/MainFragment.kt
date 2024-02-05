@@ -120,7 +120,12 @@ class MainFragment : Fragment() {
         }
         fLocationClient.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, ct.token)
             .addOnCompleteListener {
-                requestWeatherData("${it.result.latitude},${it.result.longitude}")
+                if (it.result != null) {
+                    requestWeatherData("${it.result.latitude},${it.result.longitude}")
+                }
+                else {
+                    println("AAAAA location is null")
+                }
             }
     }
 
@@ -159,14 +164,20 @@ class MainFragment : Fragment() {
                 city +
                 "&days=" +
                 "3" +
-                "&aqi=no&alerts=no"
+                "&aqi=no&alerts=no" +
+                "&lang=en"
 
         val queue = Volley.newRequestQueue(context)
         val request = StringRequest(
             Request.Method.GET,
             url,
             { result ->
-                parseWeatherData(result)
+               // val test = result.toByteArray(Charsets.US_ASCII)
+                val test = result.toByteArray(Charsets.ISO_8859_1)
+                val test1 = String(test, Charsets.UTF_8)
+                //parseWeatherData(result)
+                parseWeatherData(test1)
+                Log.d("MyLog", "test1: $test1")
                 Log.d("MyLog", "Result: $result")
             },
             { error ->
@@ -212,6 +223,10 @@ class MainFragment : Fragment() {
         mainObject: JSONObject,
         weatherItem: WeatherModel
     ) { //эта функция исключительно для заполнения сновной карточки
+        val test = mainObject.getJSONObject("location").getString("name")
+       // val test = mainObject.getJSONObject("location").get("name")
+        println("AAAAA $test/${String(test.toByteArray(Charsets.UTF_16), Charsets.UTF_8)}")
+
         val item = WeatherModel( //сюда и будем передавать данные
             mainObject.getJSONObject("location").getString("name"),
             mainObject.getJSONObject("current").getString("last_updated"),
