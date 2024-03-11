@@ -57,13 +57,12 @@ class MainFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentMainBinding.inflate(inflater, container, false)
-        return binding.root // root-элемент - это и есть view (??)
+        return binding.root
     }
 
     //функция, когда основной фрагмент загружен, когда все view уже созданы
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //todo add tabs
         checkPermission()
         init()
         updateCurrentCard()
